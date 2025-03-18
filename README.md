@@ -74,6 +74,82 @@ Liver function tests showed a uniform range of 25–95, and 55.1% of patients we
 
 ## Data Preparation
 
+We split our data into two variables called $X$, where it contains all features except our target variable, and $y$, where it contains only our target variable. We transform our $X$ variable by using `MinMaxScalar`, so it can fit in our DataFrame. Our last step of our preparation is to split our data into training and testing set.
 
+---
+
+## Modeling
+
+For modeling section, we grabbed several classification machine learning models to help us with our task:
+
+* Random Forest
+* eXtreme Boost (XGBoost)
+* Light Gradient Boost Machine (LGBM)
+* Decision Tree
+* K-Nearest Neighbor
+* Support Vector Machine (SVC)
+* Logistic Regression
+* CatBoost
+
+---
+
+## Evaluation
+
+After initializing our classifiers, then we train our models by using *cross-validation*, and score by *mean accuracy score*.
+
+The scores below shows the mean accuracy by default parameters in our machine learning models.
+
+||Mean Accuracy Score|
+|:-:|:---:|
+|CatBoost|0.912|
+|LGBM|0.889|
+|XGBoost|0.884|
+|Random Forest|0.874|
+|SVC|0.816|
+|Logistic Regression|0.808|
+|Decision Tree|0.802|
+|KNN|0.776|
+
+![Alt text](img/defaultEval.png)
+
+Based on the results, we can see that the best model for this task is `CatBoost`, but we should do some tuning; which we use `GridSearchCV` with hyperparameter for each model. This will help find the best model with its best parameters without under-fitting or over-fitting our model.
+
+||Best Score|
+|:-:|:--:|
+|CatBoost|0.914|
+|XGBoost|0.911|
+|LGBM|0.898|
+|Random Forest|0.874|
+|SVC|0.826|
+|Logistic Regression|0.814|
+|Decision Tree|0.811|
+|KNN|0.802|
+
+![Alt text](img/TunedEval)
+
+As you can see that `CatBoost` classifier is still the best model for our task. Now, we can use our model to score the training and testing set by using *accuracy*, *precision*, *recall*, and *F1-Score*. We will also display a confusion matrix of our best model.   
+
+||CatBoost|
+|:-:|:--:|
+|Training Accuracy|0.99|
+|Training Precision|1.00|
+|Training Recall|0.99|
+|Training F1-Score|0.99|
+|Test Accuracy|0.89|
+|Test Precision|0.92|
+|Test Recall|0.88|
+|Test F1-Score|0.90|
+
+![Alt text](img/confusionMatrix.png)
+
+We also created a *Classification Report*:
+
+||Precision|Recall|F1-Score|Support|
+|:-:|:-:|:-:|:-:|:-:|
+|NO|0.86|0.91|0.89|153|
+|YES|0.92|0.88|0.90|187|
+|Accuracy|N/A|N/A|0.89|340|
+|Macro AVG|0.89|0.90|0.89|340|
+|Weighted AVG|0.90|0.89|0.89|340|
 
 ---
